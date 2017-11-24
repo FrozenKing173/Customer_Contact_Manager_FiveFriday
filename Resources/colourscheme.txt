@@ -1,0 +1,9 @@
+content,p = (153,153,153);
+contentHighlighted = (100,177,222);
+h1, pageBody = white, Montserrat, sans-serif;, letter-spacing: 0.4px;
+h2 = (68,60,110);
+h3Blue = (65,159, 214)
+h3Red = (239, 45, 86);
+h3Cyan = (27,153, 139);
+h3Yellow = (252,171,16);
+extremeHighlights = black;
