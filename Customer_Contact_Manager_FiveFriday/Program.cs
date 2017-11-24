@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using System.Windows.Forms;
+using Customer_Contact_Manager_FiveFriday.Assets;
 
 namespace Customer_Contact_Manager_FiveFriday
 {
@@ -16,7 +17,12 @@ namespace Customer_Contact_Manager_FiveFriday
         {
             Application.EnableVisualStyles();
             Application.SetCompatibleTextRenderingDefault(false);
-            Application.Run(new MainView());
+
+            MainView mainView = new MainView();
+            Assets.Models.IModel mdl = new Assets.Models.Model();
+            IController cnt = new Controller(mainView, mdl);
+
+            Application.Run(mainView);
         }
     }
 }

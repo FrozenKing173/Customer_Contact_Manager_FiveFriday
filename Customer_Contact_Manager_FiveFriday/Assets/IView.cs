@@ -6,6 +6,7 @@ using System.Threading.Tasks;
 
 namespace Customer_Contact_Manager_FiveFriday.Assets
 {
+
     public delegate void ViewHandler<IView>(IView sender, ViewEventArgs e);
    
     public class ViewEventArgs : EventArgs
@@ -16,7 +17,7 @@ namespace Customer_Contact_Manager_FiveFriday.Assets
   
     public interface IView
     {
-        event ViewHandler<IView> ViewChanged;//changes
+        event ViewHandler<IView> viewChanged;
         void SetController(IController controller);
     }
 }

@@ -10,69 +10,83 @@ namespace Customer_Contact_Manager_FiveFriday.Assets.Models
   
     public class ModelEventArgs : EventArgs
     {
-        public int newval;
-        public ModelEventArgs(int v)
+        public object objectValue;
+        public ModelEventArgs(object value)
         {
-            newval = v;
+            objectValue = value;
         }
+        
+
     }
  
     public interface IModelObserver
     {
-        void valueIncremented(IModel model, ModelEventArgs e);
+        //void valueIncremented(IModel model, ModelEventArgs e);
+
+        void UpdateObserver();
     }
   
     public interface IModel
     {
-        void AttachModel(IModelObserver imo);
+        //void Attach(IModelObserver imo);
         //void increment();
         //void setvalue(int v);
+
+        void RegisterObserver(IModelObserver modelObserver);
+        void RemoveObserver(IModelObserver modelObserver);
+        void NotifyObservers();
 
         void setCustomer(int id, string name, decimal latitude, decimal longitude);
         void setCustomerContact(int id, string name, string email, string contactNumber, int customerID);
         int AddCustomer();
         int UpdateCustomer();
         int DeleteCustomer();
-        List<Customer> ReadCustomers();
+        void SelectAllCustomers();
 
         int AddCustomerContacts();
         int UpdateCustomerContacts();
         int DeleteCustomerContacts();
-        List<CustomerContacts> ReadCustomerContacts();
+        //List<CustomerContacts> ReadCustomerContacts();
     }
     public class Model : IModel
     {
         public event ModelHandler<Model> changed;
-        Customer cust = null;
-        CustomerContacts custContacts = null;
+        AccessData acData = null;
+        
      
-        public IncModel()
+        /*public IncModel()
         {
             value = 0;
-        }
+        }*/
      
-        public void setvalue(int v)
+        /*public void setvalue(int v)
         {
             value = v;
-        }
+        }*/
     
-        public void increment()
+        /*public void increment()
         {
             value++;
             changed.Invoke(this, new ModelEventArgs(value));
-        }
+        }*/
      
-        public void attach(IModelObserver imo)
+        /*public void attach(IModelObserver imo)
         {
             changed += new ModelHandler<IncModel>(imo.valueIncremented);
+        }*/
+
+        public void RegisterObserver(IModelObserver modelObserver)
+        {
+            //changed += new ModelHandler<Model>(imo.valueIncremented);
         }
+        public void RemoveObserver(IModelObserver modelObserver)
+        {
 
+        }
+        public void NotifyObservers()
+        {
 
-
-
-
-
-
+        }
 
         public void setCustomer(int id, string name, decimal latitude, decimal longitude) { }
         public void setCustomerContact(int id, string name, string email, string contactNumber, int customerID) { }
@@ -87,8 +101,10 @@ namespace Customer_Contact_Manager_FiveFriday.Assets.Models
         public int DeleteCustomer() {
             return 1;
         }
-        public List<Customer> ReadCustomers() {
-            return 1;
+        public void SelectAllCustomers() {
+            acData = new AccessData();
+            List<Customer> listOfCustomers = acData.SelectAllCustomers();
+            changed.Invoke(this, new ModelEventArgs(listOfCustomers));
         }
 
         public int AddCustomerContacts() {
@@ -100,7 +116,7 @@ namespace Customer_Contact_Manager_FiveFriday.Assets.Models
         public int DeleteCustomerContacts() {
             return 1;
         }
-        public List<CustomerContacts> ReadCustomerContacts() { }
+        //public List<CustomerContacts> ReadCustomerContacts() { }
 
     }
 }

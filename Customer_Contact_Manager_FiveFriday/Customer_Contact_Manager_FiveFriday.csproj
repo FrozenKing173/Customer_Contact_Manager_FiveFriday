@@ -48,6 +48,7 @@
   <ItemGroup>
     <Compile Include="Assets\IController.cs" />
     <Compile Include="Assets\IView.cs" />
+    <Compile Include="Assets\Models\AccessData.cs" />
     <Compile Include="Assets\Models\Customer.cs" />
     <Compile Include="Assets\Models\CustomerContacts.cs" />
     <Compile Include="Assets\Models\IModel.cs" />

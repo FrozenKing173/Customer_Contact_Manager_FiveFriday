@@ -11,15 +11,14 @@ namespace Customer_Contact_Manager_FiveFriday.Assets
     {
         //void incvalue();
 
-        int AddCustomer();
+      
         int UpdateCustomer();
         int DeleteCustomer();
-        List<Customer> ReadCustomers();
-
-        int AddCustomerContacts();
+        int SelectAllCustomers();
+       
         int UpdateCustomerContacts();
         int DeleteCustomerContacts();
-        List<CustomerContacts> ReadCustomerContacts();
+        int SelectAllCustomerContacts();
     }
     public class Controller : IController
     {
@@ -30,39 +29,48 @@ namespace Customer_Contact_Manager_FiveFriday.Assets
         {
             view = v;
             model = m;
-            view.setController(this);
-            model.attach((IModelObserver)view);
-            view.changed += new ViewHandler<IView>(this.view_changed);
+            view.SetController(this);
+            model.RegisterObserver((IModelObserver)view);
+            view.viewChanged += new ViewHandler<IView>(this.View_Changed);
         }
 
-        public void view_changed(IView v, ViewEventArgs e)
+        public void View_Changed(IView v, ViewEventArgs e)
         {
-            model.setvalue(e.value);
+            //model.setvalue(e.value);
         }
 
-        public void incvalue()
+        /*public void incvalue()
         {
-            model.increment();
-        }
+           /model.increment();
+        }*/
 
 
-        public int AddCustomer() {
+        /*public int AddCustomer() {
             return 1;
-        }
+        }*/
         public int UpdateCustomer() {
             return 1;
         }
         public int DeleteCustomer() {
             return 1;
         }
-
-        public int AddCustomerContacts() {
+        public int SelectAllCustomers()
+        {
+            model.SelectAllCustomers();
             return 1;
         }
+
+        /*public int AddCustomerContacts() {
+            return 1;
+        }*/
         public int UpdateCustomerContacts() {
             return 1;
         }
         public int DeleteCustomerContacts() {
+            return 1;
+        }
+        public int SelectAllCustomerContacts()
+        {
             return 1;
         }
 
