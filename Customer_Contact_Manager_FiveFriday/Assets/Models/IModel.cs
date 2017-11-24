@@ -23,7 +23,7 @@ namespace Customer_Contact_Manager_FiveFriday.Assets.Models
     {
         //void valueIncremented(IModel model, ModelEventArgs e);
 
-        void UpdateObserver();
+        void UpdateObserver(IModel model, ModelEventArgs modelEvents);
     }
   
     public interface IModel
@@ -36,11 +36,12 @@ namespace Customer_Contact_Manager_FiveFriday.Assets.Models
         void RemoveObserver(IModelObserver modelObserver);
         void NotifyObservers();
 
-        void setCustomer(int id, string name, decimal latitude, decimal longitude);
-        void setCustomerContact(int id, string name, string email, string contactNumber, int customerID);
-        int AddCustomer();
-        int UpdateCustomer();
-        int DeleteCustomer();
+        //void setCustomer(int id, string name, decimal latitude, decimal longitude);
+       // void setCustomerContact(int id, string name, string email, string contactNumber, int customerID);
+
+        void AddCustomer(string Name, decimal Latitude, decimal Longitude);
+        void UpdateCustomer(int ID, string Name, decimal Latitude, decimal Longitude);
+        void DeleteCustomer(int ID);
         void SelectAllCustomers();
 
         int AddCustomerContacts();
@@ -50,9 +51,11 @@ namespace Customer_Contact_Manager_FiveFriday.Assets.Models
     }
     public class Model : IModel
     {
-        public event ModelHandler<Model> changed;
+        public event ModelHandler<Model> changed = null;
         AccessData acData = null;
+        //IView currentView = null;
         
+        public Model() { }
      
         /*public IncModel()
         {
@@ -72,37 +75,52 @@ namespace Customer_Contact_Manager_FiveFriday.Assets.Models
      
         /*public void attach(IModelObserver imo)
         {
-            changed += new ModelHandler<IncModel>(imo.valueIncremented);
+            changed += new ModelHandler<IModel>(imo.valueIncremented);
         }*/
 
         public void RegisterObserver(IModelObserver modelObserver)
         {
-            //changed += new ModelHandler<Model>(imo.valueIncremented);
+            //currentView = (IView)MainView;
+            changed += new ModelHandler<Model>(modelObserver.UpdateObserver);
         }
         public void RemoveObserver(IModelObserver modelObserver)
         {
-
+            //changed += new ModelHandler<Model>(imo.valueIncreme);
         }
         public void NotifyObservers()
         {
 
         }
 
-        public void setCustomer(int id, string name, decimal latitude, decimal longitude) { }
-        public void setCustomerContact(int id, string name, string email, string contactNumber, int customerID) { }
+        //public void setCustomer(int id, string name, decimal latitude, decimal longitude) { }
+        //public void setCustomerContact(int id, string name, string email, string contactNumber, int customerID) { }
 
 
-        public int AddCustomer() {
-            return 1;
+        public void AddCustomer(string Name, decimal Latitude, decimal Longitude) {
+            acData = AccessData.Instance;
+
+            Customer cust = new Customer();
+            cust.Name = Name; cust.Latitude = Latitude; cust.Longitude = Longitude;
+            acData.AddCustomer(cust);
+            SelectAllCustomers();
         }
-        public int UpdateCustomer() {
-            return 1;
+        public void UpdateCustomer(int ID, string Name, decimal Latitude, decimal Longitude) {
+            acData = AccessData.Instance;
+
+            Customer cust = new Customer();
+            cust.ID = ID; cust.Name = Name; cust.Latitude = Latitude; cust.Longitude = Longitude;
+            acData.UpdateCustomer(cust);
+
+            SelectAllCustomers();
         }
-        public int DeleteCustomer() {
-            return 1;
+        public void DeleteCustomer(int ID) {
+            acData = AccessData.Instance;
+            acData.DeleteCustomer(ID);
+
+            SelectAllCustomers();
         }
         public void SelectAllCustomers() {
-            acData = new AccessData();
+            acData = AccessData.Instance;
             List<Customer> listOfCustomers = acData.SelectAllCustomers();
             changed.Invoke(this, new ModelEventArgs(listOfCustomers));
         }
