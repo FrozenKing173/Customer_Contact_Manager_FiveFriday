@@ -199,7 +199,7 @@ namespace Customer_Contact_Manager_FiveFriday.Assets.Models
 
 
 
-        public List<CustomerContacts> SelectAllCustomerContacts(Customer cust)
+        public List<CustomerContacts> SelectAllCustomerContacts(int customerID)
         {
             SqlConnection databaseConnection = null;
             SqlDataReader databaseReader = null;
@@ -214,7 +214,7 @@ namespace Customer_Contact_Manager_FiveFriday.Assets.Models
                 SqlCommand commandBuilder = new SqlCommand("dbo.sp_SelectAllCustomerContacts", databaseConnection);
                 commandBuilder.CommandType = System.Data.CommandType.StoredProcedure;
 
-                commandBuilder.Parameters.Add(new SqlParameter("@CustomerID", cust.ID));
+                commandBuilder.Parameters.Add(new SqlParameter("@CustomerID", customerID));
 
                 databaseReader = commandBuilder.ExecuteReader();
 
@@ -252,7 +252,7 @@ namespace Customer_Contact_Manager_FiveFriday.Assets.Models
             }
             return listOfCustContacts;
         }
-        public void AddCustomerContacts(CustomerContacts custContacts, Customer cust)
+        public void AddCustomerContacts(CustomerContacts custContacts)
         {
             SqlConnection databaseConnection = null;
 
@@ -268,7 +268,7 @@ namespace Customer_Contact_Manager_FiveFriday.Assets.Models
                 commandBuilder.Parameters.Add(new SqlParameter("@Name", custContacts.Name));
                 commandBuilder.Parameters.Add(new SqlParameter("@Email", custContacts.Email));
                 commandBuilder.Parameters.Add(new SqlParameter("@ContactNumber", custContacts.ContactNumber));
-                commandBuilder.Parameters.Add(new SqlParameter("@CustomerID", cust.ID));
+                commandBuilder.Parameters.Add(new SqlParameter("@CustomerID", custContacts.CustomerID));
 
                 commandBuilder.ExecuteNonQuery();
 

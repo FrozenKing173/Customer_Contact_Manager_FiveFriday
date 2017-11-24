@@ -10,14 +10,16 @@ using System.Windows.Forms;
 using Customer_Contact_Manager_FiveFriday.Assets;
 using Customer_Contact_Manager_FiveFriday.Assets.Models;
 
+
 namespace Customer_Contact_Manager_FiveFriday
 {
-    public partial class MainView : Form, Assets.IView, Assets.Models.IModelObserver
+    public partial class CustomerView : Form, IView, Assets.Models.IModelObserver
     {
         IController controller;
-       
-        public MainView()
+        IModel businessModel;
+        public CustomerView(IModel model)
         {
+            businessModel = model;
             InitializeComponent();
         }
 
@@ -28,15 +30,20 @@ namespace Customer_Contact_Manager_FiveFriday
             Customer cust = null;
             try
             {
-                List<Customer> listOfCustomers = (List<Customer>)modelEvents.objectValue;
-                if (listOfCustomers != null) {
+                object obj = modelEvents.objectValue;
+                bool isCustomerList = obj?.GetType() == typeof(List<Customer>);
 
-                    for (int z = 0; z < listOfCustomers.Count; z++)
-                    {
-                        cust = listOfCustomers[z];
-                        customerDataGridView.Rows.Add(cust.ID, cust.Name, cust.Latitude, cust.Longitude);
+                if (isCustomerList){
+                    List<Customer> listOfCustomers = (List<Customer>)modelEvents.objectValue;
+                    if (listOfCustomers != null) {
+
+                        for (int z = 0; z < listOfCustomers.Count; z++)
+                        {
+                            cust = listOfCustomers[z];
+                            customerDataGridView.Rows.Add(cust.ID, cust.Name, cust.Latitude, cust.Longitude);
+                        }
+
                     }
-                    GC.Collect();
                 }
             }catch(Exception e)
             {
@@ -44,7 +51,7 @@ namespace Customer_Contact_Manager_FiveFriday
                 MessageBox.Show(e.ToString(), "Exception occured in the View", MessageBoxButtons.OK, MessageBoxIcon.Warning);
                
             }
-
+            GC.Collect();
         }
         //IView
         public event ViewHandler<IView> viewChanged;
@@ -68,13 +75,23 @@ namespace Customer_Contact_Manager_FiveFriday
         private void btnUpdate_Click(object sender, EventArgs e)
         {
             int errorCode = 1;
-            Customer cust = new Customer();
+            Assets.Models.Customer cust = new Assets.Models.Customer();
             char[] removeID = new char[] { 'I', 'D', 'i', 'd', ':', ' ' };
+
+            if (txtName.Text.Length < 3)
+            {
+                MessageBox.Show("Kindly fill in the Name entry.", "Oops!", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                errorCode = 0;
+
+            }
+            else
+            {
+                cust.Name = txtName.Text;
+            }
             try
             {
                
-                cust.ID = int.Parse(lblID.Text.TrimStart(removeID));
-                cust.Name = txtName.Text;
+                cust.ID = int.Parse(lblID.Text.TrimStart(removeID));                
             }catch(Exception ex)
             {
                 errorCode = 0;
@@ -152,6 +169,28 @@ namespace Customer_Contact_Manager_FiveFriday
                 controller.AddCustomer(cust.Name, cust.Latitude, cust.Longitude);
             }
 
+        }
+
+        private void btnCustomerContacts_Click(object sender, EventArgs e)
+        {
+            ContactsView custContactsView = null;
+            try
+            {
+                char[] removeID = new char[] { 'I', 'D', 'i', 'd', ':', ' ' };
+                int ID = int.Parse(lblID.Text.TrimStart(removeID));
+                custContactsView = new ContactsView(businessModel);
+                businessModel.RegisterObserver(custContactsView);
+
+                custContactsView.CustomerID = ID;
+                custContactsView.Show();
+                
+                
+            }catch(Exception ex)
+            {
+                custContactsView = null;
+                MessageBox.Show("Please select a customer.", "Whoops!", MessageBoxButtons.OK, MessageBoxIcon.Information);
+
+            }
         }
     }
 }

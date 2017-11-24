@@ -18,9 +18,9 @@ namespace Customer_Contact_Manager_FiveFriday
             Application.EnableVisualStyles();
             Application.SetCompatibleTextRenderingDefault(false);
 
-            MainView mainView = new MainView();
-            Assets.Models.IModel mdl = new Assets.Models.Model();
-            IController cnt = new Controller(mainView, mdl);
+            Assets.Models.IModel model = new Assets.Models.Model();
+            CustomerView mainView = new CustomerView(model);            
+            IController cnt = new Controller(mainView, model);
 
             Application.Run(mainView);
         }

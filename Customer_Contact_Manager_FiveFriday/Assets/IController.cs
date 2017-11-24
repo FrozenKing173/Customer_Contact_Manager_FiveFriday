@@ -15,10 +15,11 @@ namespace Customer_Contact_Manager_FiveFriday.Assets
         void UpdateCustomer(int ID, string Name, decimal Latitude, decimal Longitude);
         void DeleteCustomer(int ID);
         void SelectAllCustomers();
-       
-        int UpdateCustomerContacts();
-        int DeleteCustomerContacts();
-        int SelectAllCustomerContacts();
+
+        void AddCustomerContacts(string name, string email, string contactNumber, int customerID);
+        void UpdateCustomerContacts();
+        void DeleteCustomerContacts();
+        void SelectAllCustomerContacts(int customerID);
     }
     public class Controller : IController
     {
@@ -31,7 +32,7 @@ namespace Customer_Contact_Manager_FiveFriday.Assets
             model = m;
             view.SetController(this);
             model.RegisterObserver((Assets.Models.IModelObserver)view);
-            view.viewChanged += new ViewHandler<IView>(this.View_Changed);
+            //view.viewChanged += new ViewHandler<IView>(this.View_Changed);
         }
 
         public void View_Changed(IView v, ViewEventArgs e)
@@ -61,21 +62,26 @@ namespace Customer_Contact_Manager_FiveFriday.Assets
             model.SelectAllCustomers();           
         }
 
-        /*public int AddCustomerContacts() {
-            return 1;
-        }*/
-        public int UpdateCustomerContacts() {
-            return 1;
+        public void AddCustomerContacts(string name, string email, string contactNumber, int customerID) {
+            model.AddCustomerContacts(name, email, contactNumber, customerID);
         }
-        public int DeleteCustomerContacts() {
-            return 1;
+        public void UpdateCustomerContacts() {
+           
         }
-        public int SelectAllCustomerContacts()
+        public void DeleteCustomerContacts() {
+            
+        }
+        public void SelectAllCustomerContacts(int customerID)
         {
-            return 1;
+            model.SelectAllCustomerContacts(customerID);
         }
 
 
+
+        public void RegisterObserver(Assets.Models.IModelObserver newView)
+        {
+            model.RegisterObserver(newView);
+        }
 
     }
 }

@@ -1,6 +1,6 @@
 ﻿namespace Customer_Contact_Manager_FiveFriday
 {
-    partial class MainView
+    partial class CustomerView
     {
         /// <summary>
         /// Required designer variable.
@@ -28,7 +28,7 @@
         /// </summary>
         private void InitializeComponent()
         {
-            System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(MainView));
+            System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(CustomerView));
             this.logo = new System.Windows.Forms.PictureBox();
             this.grpCustomer = new System.Windows.Forms.GroupBox();
             this.btnAdd = new System.Windows.Forms.Button();
@@ -46,6 +46,7 @@
             this.CustomerName = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.Latitude = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.Longitude = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.btnCustomerContacts = new System.Windows.Forms.Button();
             ((System.ComponentModel.ISupportInitialize)(this.logo)).BeginInit();
             this.grpCustomer.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.customerDataGridView)).BeginInit();
@@ -61,6 +62,7 @@
             // 
             // grpCustomer
             // 
+            this.grpCustomer.Controls.Add(this.btnCustomerContacts);
             this.grpCustomer.Controls.Add(this.btnAdd);
             this.grpCustomer.Controls.Add(this.btnDelete);
             this.grpCustomer.Controls.Add(this.btnUpdate);
@@ -215,6 +217,16 @@
             this.Longitude.ReadOnly = true;
             this.Longitude.Width = 90;
             // 
+            // btnCustomerContacts
+            // 
+            this.btnCustomerContacts.Location = new System.Drawing.Point(255, 137);
+            this.btnCustomerContacts.Name = "btnCustomerContacts";
+            this.btnCustomerContacts.Size = new System.Drawing.Size(88, 23);
+            this.btnCustomerContacts.TabIndex = 9;
+            this.btnCustomerContacts.Text = "Contacts";
+            this.btnCustomerContacts.UseVisualStyleBackColor = true;
+            this.btnCustomerContacts.Click += new System.EventHandler(this.btnCustomerContacts_Click);
+            // 
             // MainView
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -258,6 +270,7 @@
         private System.Windows.Forms.DataGridViewTextBoxColumn CustomerName;
         private System.Windows.Forms.DataGridViewTextBoxColumn Latitude;
         private System.Windows.Forms.DataGridViewTextBoxColumn Longitude;
+        private System.Windows.Forms.Button btnCustomerContacts;
     }
 }
 

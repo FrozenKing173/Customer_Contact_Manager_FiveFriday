@@ -34,7 +34,7 @@ namespace Customer_Contact_Manager_FiveFriday.Assets.Models
 
         void RegisterObserver(IModelObserver modelObserver);
         void RemoveObserver(IModelObserver modelObserver);
-        void NotifyObservers();
+        void NotifyObservers(ModelEventArgs modelEvent);
 
         //void setCustomer(int id, string name, decimal latitude, decimal longitude);
        // void setCustomerContact(int id, string name, string email, string contactNumber, int customerID);
@@ -44,18 +44,21 @@ namespace Customer_Contact_Manager_FiveFriday.Assets.Models
         void DeleteCustomer(int ID);
         void SelectAllCustomers();
 
-        int AddCustomerContacts();
-        int UpdateCustomerContacts();
-        int DeleteCustomerContacts();
-        //List<CustomerContacts> ReadCustomerContacts();
+        void AddCustomerContacts(string name, string email, string contactNumber, int customerID);
+        void UpdateCustomerContacts();
+        void DeleteCustomerContacts();
+        void SelectAllCustomerContacts(int customerID);
     }
     public class Model : IModel
     {
         public event ModelHandler<Model> changed = null;
+        List<IModelObserver> modelObservers = null;
         AccessData acData = null;
         //IView currentView = null;
         
-        public Model() { }
+        public Model() {
+            modelObservers = new List<IModelObserver>();
+        }
      
         /*public IncModel()
         {
@@ -77,19 +80,20 @@ namespace Customer_Contact_Manager_FiveFriday.Assets.Models
         {
             changed += new ModelHandler<IModel>(imo.valueIncremented);
         }*/
-
-        public void RegisterObserver(IModelObserver modelObserver)
+            
+        public void RegisterObserver(IModelObserver observer)
         {
+            modelObservers.Add(observer);
             //currentView = (IView)MainView;
-            changed += new ModelHandler<Model>(modelObserver.UpdateObserver);
+            changed += new ModelHandler<Model>(observer.UpdateObserver);
         }
-        public void RemoveObserver(IModelObserver modelObserver)
+        public void RemoveObserver(IModelObserver observer)
         {
-            //changed += new ModelHandler<Model>(imo.valueIncreme);
+            modelObservers.Remove(observer);
         }
-        public void NotifyObservers()
+        public void NotifyObservers(ModelEventArgs modelEvent)
         {
-
+            changed.Invoke(this, modelEvent);
         }
 
         //public void setCustomer(int id, string name, decimal latitude, decimal longitude) { }
@@ -125,16 +129,25 @@ namespace Customer_Contact_Manager_FiveFriday.Assets.Models
             changed.Invoke(this, new ModelEventArgs(listOfCustomers));
         }
 
-        public int AddCustomerContacts() {
-            return 1;
+        public void AddCustomerContacts(string name, string email, string contactNumber, int customerID) {
+            acData = AccessData.Instance;
+
+            CustomerContacts custContacts = new CustomerContacts();
+            custContacts.Name = name; custContacts.Email = email; custContacts.ContactNumber = contactNumber; custContacts.CustomerID = customerID;
+            acData.AddCustomerContacts(custContacts);
+            SelectAllCustomerContacts(customerID);
         }
-        public int UpdateCustomerContacts() {
-            return 1;
+        public void UpdateCustomerContacts() {
+            
         }
-        public int DeleteCustomerContacts() {
-            return 1;
+        public void DeleteCustomerContacts() {
+            
         }
-        //public List<CustomerContacts> ReadCustomerContacts() { }
+        public void SelectAllCustomerContacts(int customerID) {
+            acData = AccessData.Instance;
+            List<CustomerContacts> listOfCustomerContacts = acData.SelectAllCustomerContacts(customerID);
+            NotifyObservers(new ModelEventArgs(listOfCustomerContacts));
+        }
 
     }
 }

@@ -52,16 +52,25 @@
     <Compile Include="Assets\Models\Customer.cs" />
     <Compile Include="Assets\Models\CustomerContacts.cs" />
     <Compile Include="Assets\Models\IModel.cs" />
-    <Compile Include="MainView.cs">
+    <Compile Include="ContactsView.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="MainView.Designer.cs">
-      <DependentUpon>MainView.cs</DependentUpon>
+    <Compile Include="ContactsView.Designer.cs">
+      <DependentUpon>ContactsView.cs</DependentUpon>
+    </Compile>
+    <Compile Include="CustomerView.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="CustomerView.Designer.cs">
+      <DependentUpon>CustomerView.cs</DependentUpon>
     </Compile>
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <EmbeddedResource Include="MainView.resx">
-      <DependentUpon>MainView.cs</DependentUpon>
+    <EmbeddedResource Include="ContactsView.resx">
+      <DependentUpon>ContactsView.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="CustomerView.resx">
+      <DependentUpon>CustomerView.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Properties\Resources.resx">
       <Generator>ResXFileCodeGenerator</Generator>
