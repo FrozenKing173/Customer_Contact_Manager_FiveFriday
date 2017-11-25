@@ -9,57 +9,77 @@ using System.Threading.Tasks;
 using System.Windows.Forms;
 using Customer_Contact_Manager_FiveFriday.Assets;
 using Customer_Contact_Manager_FiveFriday.Assets.Models;
-
+using System.Collections;
 
 namespace Customer_Contact_Manager_FiveFriday
 {
     public partial class CustomerView : Form, IView, Assets.Models.IModelObserver
     {
         IController controller;
-        IModel businessModel;
+        IModel businessModel;        
         public CustomerView(IModel model)
         {
-            businessModel = model;
+            businessModel = model;            
             InitializeComponent();
         }
+        
 
         //IModelObserverable
-        public void UpdateObserver(Assets.Models.IModel model, Assets.Models.ModelEventArgs modelEvents)
+        public void UpdateBusinessView(Dictionary<string, IList> updates)
         {
-            customerDataGridView.Rows.Clear();
+            
             Customer cust = null;
+           
+
             try
             {
-                object obj = modelEvents.objectValue;
-                bool isCustomerList = obj?.GetType() == typeof(List<Customer>);
+                List<Customer> listOfCustomers = (List<Customer>)updates["None_Customer"];
+                //object obj = modelEvents.objectValue;
+                //bool isCustomerList = obj?.GetType() == typeof(List<Customer>);
 
-                if (isCustomerList){
-                    List<Customer> listOfCustomers = (List<Customer>)modelEvents.objectValue;
-                    if (listOfCustomers != null) {
-
-                        for (int z = 0; z < listOfCustomers.Count; z++)
-                        {
-                            cust = listOfCustomers[z];
-                            customerDataGridView.Rows.Add(cust.ID, cust.Name, cust.Latitude, cust.Longitude);
-                        }
-
+                if (listOfCustomers.Count > 0){
+                    customerDataGridView.Rows.Clear();
+                    //List<Customer> listOfCustomers = (List<Customer>)modelEvents.objectValue;
+                    for (int z = 0; z < listOfCustomers.Count; z++)
+                    {
+                        cust = listOfCustomers[z];
+                        customerDataGridView.Rows.Add(cust.ID, cust.Name, cust.Latitude, cust.Longitude);
                     }
                 }
             }catch(Exception e)
             {
                 
-                MessageBox.Show(e.ToString(), "Exception occured in the View", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                MessageBox.Show("An excpetion occured in updating the Customer view.", "Whoops!", MessageBoxButtons.OK, MessageBoxIcon.Warning);
                
             }
             GC.Collect();
         }
+        public string GetBusinessViewState()
+        {
+            return "None_Customer";
+        }
         //IView
-        public event ViewHandler<IView> viewChanged;
+        //public event ViewHandler<IView> viewChanged;
         public void SetController(IController control)
         {
             controller = control;
         }
-       
+        public void RegisterView()
+        {
+            businessModel.RegisterObserver(this, GetBusinessViewState());
+        }
+        public void UnRegisterView()
+        {
+            businessModel.RemoveObserver(this, GetBusinessViewState());
+        }
+        
+        public string GetBusinessContactsViewState()
+        {
+            char[] removeID = new char[] { 'I', 'D', 'i', 'd', ':', ' ' };
+            int ID = int.Parse(lblID.Text.TrimStart(removeID));
+            return  ID.ToString() + "_CustomerContacts";
+        }
+
 
 
 
@@ -80,7 +100,7 @@ namespace Customer_Contact_Manager_FiveFriday
 
             if (txtName.Text.Length < 3)
             {
-                MessageBox.Show("Kindly fill in the Name entry.", "Oops!", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                MessageBox.Show("Kindly fill in the Name entry.", "Whoops!", MessageBoxButtons.OK, MessageBoxIcon.Information);
                 errorCode = 0;
 
             }
@@ -95,7 +115,7 @@ namespace Customer_Contact_Manager_FiveFriday
             }catch(Exception ex)
             {
                 errorCode = 0;
-                MessageBox.Show(ex.ToString(), "Exception occured in the View being updated", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                MessageBox.Show(ex.ToString(), "Whoops!", MessageBoxButtons.OK, MessageBoxIcon.Warning);
 
             }
             try
@@ -106,7 +126,7 @@ namespace Customer_Contact_Manager_FiveFriday
             catch (Exception ex)
             {
                 errorCode = 0;
-                MessageBox.Show("Please ensure a valid decimal number is entered.", "Exception occured in the View being updated", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                MessageBox.Show("Please ensure a valid decimal number is entered.", "Whoops!", MessageBoxButtons.OK, MessageBoxIcon.Warning);
 
             }
             if (errorCode == 1)
@@ -145,7 +165,7 @@ namespace Customer_Contact_Manager_FiveFriday
             int errorCode = 1;
             if(txtName.Text.Length < 3)
             {
-                MessageBox.Show("Kindly fill in the Name entry.", "Oops!", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                MessageBox.Show("Kindly fill in the Name entry.", "Whoops!", MessageBoxButtons.OK, MessageBoxIcon.Information);
                 errorCode = 0;
 
             }
@@ -161,7 +181,7 @@ namespace Customer_Contact_Manager_FiveFriday
             }catch(Exception ex)
             {
                 errorCode = 0;
-                MessageBox.Show("Kindly ensure that the Latitude and Longitude fields are decimal.", "Oops!", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                MessageBox.Show("Kindly ensure that the Latitude and Longitude fields are decimal.", "Whoops!", MessageBoxButtons.OK, MessageBoxIcon.Information);
             }
 
             if (errorCode == 1)
@@ -178,18 +198,16 @@ namespace Customer_Contact_Manager_FiveFriday
             {
                 char[] removeID = new char[] { 'I', 'D', 'i', 'd', ':', ' ' };
                 int ID = int.Parse(lblID.Text.TrimStart(removeID));
-                custContactsView = new ContactsView(businessModel);
-                businessModel.RegisterObserver(custContactsView);
-
-                custContactsView.CustomerID = ID;
-                custContactsView.Show();
-                
+                custContactsView = new ContactsView(businessModel, ID);
+                businessModel.RegisterObserver(custContactsView, GetBusinessContactsViewState());
+                controller.InitializeContactsView(custContactsView);
+                              
                 
             }catch(Exception ex)
             {
                 custContactsView = null;
                 MessageBox.Show("Please select a customer.", "Whoops!", MessageBoxButtons.OK, MessageBoxIcon.Information);
-
+                //"Please select a customer."
             }
         }
     }

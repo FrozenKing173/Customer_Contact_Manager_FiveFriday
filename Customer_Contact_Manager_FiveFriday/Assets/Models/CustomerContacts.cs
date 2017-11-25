@@ -28,8 +28,8 @@ namespace Customer_Contact_Manager_FiveFriday.Assets.Models
         }
         public string Email
         {
-            get { return name; }
-            set { name = value; }
+            get { return email; }
+            set { email = value; }
         }
         public string ContactNumber
         {

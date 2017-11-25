@@ -226,6 +226,7 @@ namespace Customer_Contact_Manager_FiveFriday.Assets.Models
                     custContacts.Name = databaseReader["Name"].ToString();
                     custContacts.Email = databaseReader["Email"].ToString();
                     custContacts.ContactNumber = databaseReader["ContactNumber"].ToString();
+                    custContacts.CustomerID = int.Parse(databaseReader["CustomerID"].ToString());
                     listOfCustContacts.Add(custContacts);
                     
                 }

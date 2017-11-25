@@ -49,6 +49,7 @@
     <Compile Include="Assets\IController.cs" />
     <Compile Include="Assets\IView.cs" />
     <Compile Include="Assets\Models\AccessData.cs" />
+    <Compile Include="Assets\Models\BusinessObserver.cs" />
     <Compile Include="Assets\Models\Customer.cs" />
     <Compile Include="Assets\Models\CustomerContacts.cs" />
     <Compile Include="Assets\Models\IModel.cs" />
@@ -98,6 +99,7 @@
   <ItemGroup />
   <ItemGroup>
     <Content Include="Assets\Images\logomark_90px.png" />
+    <Content Include="Assets\Images\logomark_icon.ico" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

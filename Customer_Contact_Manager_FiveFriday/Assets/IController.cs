@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+//using System.Windows.Forms
 
 
 namespace Customer_Contact_Manager_FiveFriday.Assets
@@ -20,6 +21,9 @@ namespace Customer_Contact_Manager_FiveFriday.Assets
         void UpdateCustomerContacts();
         void DeleteCustomerContacts();
         void SelectAllCustomerContacts(int customerID);
+
+        void InitializeContactsView(IView custContactsView);
+        //void StartApp();
     }
     public class Controller : IController
     {
@@ -30,15 +34,15 @@ namespace Customer_Contact_Manager_FiveFriday.Assets
         {
             view = v;
             model = m;
-            view.SetController(this);
-            model.RegisterObserver((Assets.Models.IModelObserver)view);
+            //view.SetController(this);
+            //model.RegisterObserver((Assets.Models.IModelObserver)view);
             //view.viewChanged += new ViewHandler<IView>(this.View_Changed);
         }
 
-        public void View_Changed(IView v, ViewEventArgs e)
+        /*public void View_Changed(IView v, ViewEventArgs e)
         {
             //model.setvalue(e.value);
-        }
+        }*/
 
         /*public void incvalue()
         {
@@ -49,7 +53,11 @@ namespace Customer_Contact_Manager_FiveFriday.Assets
         /*public int AddCustomer() {
             return 1;
         }*/
-        public void AddCustomer(string Name, decimal Latitude, decimal Longitude){
+        /*public void StartApp()
+        {
+            Application.Run()
+        }*/
+        public void AddCustomer(string Name, decimal Latitude, decimal Longitude){            
             model.AddCustomer(Name, Latitude, Longitude);
         }
         public void UpdateCustomer(int ID, string Name, decimal Latitude, decimal Longitude) {
@@ -66,22 +74,23 @@ namespace Customer_Contact_Manager_FiveFriday.Assets
             model.AddCustomerContacts(name, email, contactNumber, customerID);
         }
         public void UpdateCustomerContacts() {
-           
+            model.UpdateCustomerContacts();
         }
         public void DeleteCustomerContacts() {
-            
+            model.DeleteCustomerContacts();
         }
         public void SelectAllCustomerContacts(int customerID)
         {
             model.SelectAllCustomerContacts(customerID);
         }
 
-
-
-        public void RegisterObserver(Assets.Models.IModelObserver newView)
+        public void InitializeContactsView(IView custContactsView)
         {
-            model.RegisterObserver(newView);
-        }
 
+            
+            custContactsView.SetController(this);
+            ((ContactsView)custContactsView).Show();
+
+        }
     }
 }
