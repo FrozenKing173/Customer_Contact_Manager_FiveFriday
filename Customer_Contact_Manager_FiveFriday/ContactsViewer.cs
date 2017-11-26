@@ -51,30 +51,33 @@ namespace Customer_Contact_Manager_FiveFriday
             {
                 List<CustomerContacts> listOfCustomerContacts = (List<CustomerContacts>)updates[GetBusinessViewState()];
                 //Clear view data.
-                if (listOfCustomerContacts.Count > 0)
+                if (customerContactsListView.Items.Count > 0)
                 {
                     for (int x = customerContactsListView.Items.Count - 1; x >= 0; x--)
                     {
                         customerContactsListView.Items[x].Remove();                       
                     }
-                }]
+                }
                 //Fill view data.
-                ListViewItem listItem = null;
-                for (int z = 0; z < listOfCustomerContacts.Count; z++)
+                if (listOfCustomerContacts.Count > 0)
                 {
-                    custContacts = new CustomerContacts();
-                    custContacts = listOfCustomerContacts[z];
-
-                    if (custContacts.CustomerID == CustomerID)
+                    ListViewItem listItem = null;
+                    for (int z = 0; z < listOfCustomerContacts.Count; z++)
                     {
-                        listItem = new ListViewItem(custContacts.ID.ToString());
-                        listItem.SubItems.Add(custContacts.Name);
-                        listItem.SubItems.Add(custContacts.Email);
-                        listItem.SubItems.Add(custContacts.ContactNumber);
+                        custContacts = new CustomerContacts();
+                        custContacts = listOfCustomerContacts[z];
 
-                        customerContactsListView.Items.Add(listItem);
+                        if (custContacts.CustomerID == CustomerID)
+                        {
+                            listItem = new ListViewItem(custContacts.ID.ToString());
+                            listItem.SubItems.Add(custContacts.Name);
+                            listItem.SubItems.Add(custContacts.Email);
+                            listItem.SubItems.Add(custContacts.ContactNumber);
+
+                            customerContactsListView.Items.Add(listItem);
+                        }
                     }
-                }               
+                }              
             }
             catch (Exception e)
             {
@@ -124,10 +127,18 @@ namespace Customer_Contact_Manager_FiveFriday
                 if (!string.IsNullOrEmpty(txtName.Text) && !string.IsNullOrEmpty(txtEmail.Text) && !string.IsNullOrEmpty(txtContactNumber.Text))
                 {
                     custContacts = new CustomerContacts();
-                    custContacts.CustomerID = CustomerID;
-                    custContacts.ID = int.Parse(lblID.Text.TrimStart(removeID));
+                    
+                    
                     custContacts.ContactNumber = txtContactNumber.Text;
 
+                    if (lblID.Text.Length > 4)
+                    {
+                        custContacts.ID = int.Parse(lblID.Text.TrimStart(removeID));
+                    }else
+                    {
+                        errorCode = 1;
+                        MessageBox.Show("Kindly select a customer's contacts to be updated.", "Whoops!", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                    }
                     if (txtName.Text.Length > 2)
                     {
                         custContacts.Name = txtName.Text;
@@ -204,7 +215,7 @@ namespace Customer_Contact_Manager_FiveFriday
                 if (!string.IsNullOrEmpty(txtName.Text) && !string.IsNullOrEmpty(txtEmail.Text) && !string.IsNullOrEmpty(txtContactNumber.Text))
                 {
                     custContacts = new CustomerContacts();
-                    custContacts.ContactNumber = this.txtContactNumber.Text;
+                    custContacts.ContactNumber = txtContactNumber.Text;
                     if (txtName.Text.Length < 3)
                     {
                         MessageBox.Show("Kindly fill in the Name field.", "Whoops!", MessageBoxButtons.OK, MessageBoxIcon.Information);

@@ -28,6 +28,7 @@
         /// </summary>
         private void InitializeComponent()
         {
+            this.components = new System.ComponentModel.Container();
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(ContactsViewer));
             this.customerContactsListView = new System.Windows.Forms.ListView();
             this.CustomerContactsID = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
@@ -46,6 +47,7 @@
             this.lblEmail = new System.Windows.Forms.Label();
             this.txtName = new System.Windows.Forms.TextBox();
             this.lblName = new System.Windows.Forms.Label();
+            this.toolTip = new System.Windows.Forms.ToolTip(this.components);
             this.grpCustomerContacts.SuspendLayout();
             this.SuspendLayout();
             // 
@@ -63,6 +65,7 @@
             this.customerContactsListView.Name = "customerContactsListView";
             this.customerContactsListView.Size = new System.Drawing.Size(443, 464);
             this.customerContactsListView.TabIndex = 7;
+            this.toolTip.SetToolTip(this.customerContactsListView, "A list containing contact profiles.");
             this.customerContactsListView.UseCompatibleStateImageBehavior = false;
             this.customerContactsListView.View = System.Windows.Forms.View.Details;
             this.customerContactsListView.SelectedIndexChanged += new System.EventHandler(this.customerContactsListView_SelectedIndexChanged);
@@ -128,6 +131,7 @@
             this.lblCustomerName.Size = new System.Drawing.Size(164, 22);
             this.lblCustomerName.TabIndex = 7;
             this.lblCustomerName.Text = "lblCustomerName";
+            this.toolTip.SetToolTip(this.lblCustomerName, "Customer name.");
             // 
             // btnAdd
             // 
@@ -139,6 +143,7 @@
             this.btnAdd.Size = new System.Drawing.Size(87, 27);
             this.btnAdd.TabIndex = 4;
             this.btnAdd.Text = "Add";
+            this.toolTip.SetToolTip(this.btnAdd, "Add a new contact profile for this customer.");
             this.btnAdd.UseVisualStyleBackColor = true;
             this.btnAdd.Click += new System.EventHandler(this.btnAdd_Click);
             // 
@@ -152,6 +157,7 @@
             this.btnDelete.Size = new System.Drawing.Size(87, 27);
             this.btnDelete.TabIndex = 6;
             this.btnDelete.Text = "Delete";
+            this.toolTip.SetToolTip(this.btnDelete, "Deletes this contact profile.");
             this.btnDelete.UseVisualStyleBackColor = true;
             this.btnDelete.Click += new System.EventHandler(this.btnDelete_Click);
             // 
@@ -165,6 +171,7 @@
             this.btnUpdate.Size = new System.Drawing.Size(87, 27);
             this.btnUpdate.TabIndex = 5;
             this.btnUpdate.Text = "Update";
+            this.toolTip.SetToolTip(this.btnUpdate, "Updates this contact profile.");
             this.btnUpdate.UseVisualStyleBackColor = true;
             this.btnUpdate.Click += new System.EventHandler(this.btnUpdate_Click);
             // 
@@ -174,6 +181,7 @@
             this.txtContactNumber.Name = "txtContactNumber";
             this.txtContactNumber.Size = new System.Drawing.Size(186, 21);
             this.txtContactNumber.TabIndex = 3;
+            this.toolTip.SetToolTip(this.txtContactNumber, "A customer\'s contact number e.g. (+27)74 225 6359");
             // 
             // lblContactNumber
             // 
@@ -183,6 +191,7 @@
             this.lblContactNumber.Size = new System.Drawing.Size(100, 15);
             this.lblContactNumber.TabIndex = 4;
             this.lblContactNumber.Text = "Contact Number:";
+            this.toolTip.SetToolTip(this.lblContactNumber, "A customer\'s contact number e.g. (+27)74 225 6359");
             // 
             // txtEmail
             // 
@@ -190,6 +199,7 @@
             this.txtEmail.Name = "txtEmail";
             this.txtEmail.Size = new System.Drawing.Size(186, 21);
             this.txtEmail.TabIndex = 2;
+            this.toolTip.SetToolTip(this.txtEmail, "A customer\'s contact email address. e.g. jeandrevdyk@gmail.com");
             // 
             // lblEmail
             // 
@@ -199,6 +209,7 @@
             this.lblEmail.Size = new System.Drawing.Size(40, 15);
             this.lblEmail.TabIndex = 2;
             this.lblEmail.Text = "Email:";
+            this.toolTip.SetToolTip(this.lblEmail, "A customer\'s contact email address. e.g. jeandrevdyk@gmail.com");
             // 
             // txtName
             // 
@@ -206,6 +217,7 @@
             this.txtName.Name = "txtName";
             this.txtName.Size = new System.Drawing.Size(186, 21);
             this.txtName.TabIndex = 1;
+            this.toolTip.SetToolTip(this.txtName, "A customer\'s contact name e.g. Jeandre");
             // 
             // lblName
             // 
@@ -215,6 +227,7 @@
             this.lblName.Size = new System.Drawing.Size(43, 15);
             this.lblName.TabIndex = 0;
             this.lblName.Text = "Name:";
+            this.toolTip.SetToolTip(this.lblName, "A customer\'s contact name e.g. Jeandre");
             // 
             // ContactsViewer
             // 
@@ -259,5 +272,6 @@
         private System.Windows.Forms.ColumnHeader CustomerContactsName;
         private System.Windows.Forms.Label lblCustomerName;
         private System.Windows.Forms.Label lblID;
+        private System.Windows.Forms.ToolTip toolTip;
     }
 }

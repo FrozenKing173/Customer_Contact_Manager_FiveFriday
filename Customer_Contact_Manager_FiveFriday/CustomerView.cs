@@ -35,15 +35,18 @@ namespace Customer_Contact_Manager_FiveFriday
             {
                 List<Customer> listOfCustomers = (List<Customer>)updates["None_Customer"];                
                 //Clear view data.
-                if (listOfCustomers.Count > 0){
+                if (customerDataGridView.Rows.Count > 0){
                     customerDataGridView.Rows.Clear();                                
                 }
                 //Filld view data.
-                for (int z = 0; z < listOfCustomers.Count; z++)
+                if (listOfCustomers.Count > 0)
                 {
-                    cust = new Customer();
-                    cust = listOfCustomers[z];
-                    customerDataGridView.Rows.Add(cust.ID, cust.Name, cust.Latitude, cust.Longitude);
+                    for (int z = 0; z < listOfCustomers.Count; z++)
+                    {
+                        cust = new Customer();
+                        cust = listOfCustomers[z];
+                        customerDataGridView.Rows.Add(cust.ID, cust.Name, cust.Latitude, cust.Longitude);
+                    }
                 }
             }
             catch(Exception e)
@@ -97,9 +100,17 @@ namespace Customer_Contact_Manager_FiveFriday
             {
                 if (!string.IsNullOrEmpty(txtName.Text) && !string.IsNullOrEmpty(txtLatitude.Text) && !string.IsNullOrEmpty(txtLongitude.Text))
                 {
-                    cust = new Customer();
-                    cust.ID = int.Parse(lblID.Text.TrimStart(removeID));
+                    cust = new Customer();                    
 
+                    if (lblID.Text.Length > 4)
+                    {
+                        cust.ID = int.Parse(lblID.Text.TrimStart(removeID));
+                    }
+                    else
+                    {
+                        errorCode = 1;
+                        MessageBox.Show("Kindly select a customer's contacts to be updated.", "Whoops!", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                    }
                     if (txtName.Text.Length < 3)
                     {
                         MessageBox.Show("Kindly fill in the Name field.", "Whoops!", MessageBoxButtons.OK, MessageBoxIcon.Information);
@@ -270,6 +281,6 @@ namespace Customer_Contact_Manager_FiveFriday
             myColor = System.Drawing.ColorTranslator.FromHtml(grey);
             this.customerDataGridView.BackgroundColor = myColor;
 
-        }       
+        }
     }
 }

@@ -28,6 +28,7 @@
         /// </summary>
         private void InitializeComponent()
         {
+            this.components = new System.ComponentModel.Container();
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(CustomerView));
             this.logo = new System.Windows.Forms.PictureBox();
             this.grpCustomer = new System.Windows.Forms.GroupBox();
@@ -47,6 +48,7 @@
             this.CustomerName = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.Latitude = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.Longitude = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.toolTip = new System.Windows.Forms.ToolTip(this.components);
             ((System.ComponentModel.ISupportInitialize)(this.logo)).BeginInit();
             this.grpCustomer.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.customerDataGridView)).BeginInit();
@@ -90,6 +92,7 @@
             this.btnCustomerContacts.Size = new System.Drawing.Size(113, 27);
             this.btnCustomerContacts.TabIndex = 7;
             this.btnCustomerContacts.Text = "Contacts";
+            this.toolTip.SetToolTip(this.btnCustomerContacts, "Gets a specific customer\'s contacts.");
             this.btnCustomerContacts.UseVisualStyleBackColor = true;
             this.btnCustomerContacts.Click += new System.EventHandler(this.btnCustomerContacts_Click);
             // 
@@ -103,6 +106,7 @@
             this.btnAdd.Size = new System.Drawing.Size(87, 27);
             this.btnAdd.TabIndex = 4;
             this.btnAdd.Text = "Add";
+            this.toolTip.SetToolTip(this.btnAdd, "Adds a customer.");
             this.btnAdd.UseVisualStyleBackColor = true;
             this.btnAdd.Click += new System.EventHandler(this.btnAdd_Click);
             // 
@@ -116,6 +120,7 @@
             this.btnDelete.Size = new System.Drawing.Size(87, 27);
             this.btnDelete.TabIndex = 6;
             this.btnDelete.Text = "Delete";
+            this.toolTip.SetToolTip(this.btnDelete, "Deletes a specific customer.");
             this.btnDelete.UseVisualStyleBackColor = true;
             this.btnDelete.Click += new System.EventHandler(this.btnDelete_Click);
             // 
@@ -129,6 +134,7 @@
             this.btnUpdate.Size = new System.Drawing.Size(87, 27);
             this.btnUpdate.TabIndex = 5;
             this.btnUpdate.Text = "Update";
+            this.toolTip.SetToolTip(this.btnUpdate, "Updates a specific customer.");
             this.btnUpdate.UseVisualStyleBackColor = true;
             this.btnUpdate.Click += new System.EventHandler(this.btnUpdate_Click);
             // 
@@ -147,6 +153,7 @@
             this.txtLongitude.Name = "txtLongitude";
             this.txtLongitude.Size = new System.Drawing.Size(116, 21);
             this.txtLongitude.TabIndex = 3;
+            this.toolTip.SetToolTip(this.txtLongitude, "A decimal number for a customer longitude e.g. 22.23456");
             // 
             // lblLongitude
             // 
@@ -156,6 +163,7 @@
             this.lblLongitude.Size = new System.Drawing.Size(65, 15);
             this.lblLongitude.TabIndex = 4;
             this.lblLongitude.Text = "Longitude:";
+            this.toolTip.SetToolTip(this.lblLongitude, "A decimal number for a customer longitude e.g. 22.23456");
             // 
             // txtLatitude
             // 
@@ -163,6 +171,7 @@
             this.txtLatitude.Name = "txtLatitude";
             this.txtLatitude.Size = new System.Drawing.Size(116, 21);
             this.txtLatitude.TabIndex = 2;
+            this.toolTip.SetToolTip(this.txtLatitude, "A decimal number for a customer latitude e.g. 22.23456");
             // 
             // lblLatitude
             // 
@@ -172,6 +181,7 @@
             this.lblLatitude.Size = new System.Drawing.Size(53, 15);
             this.lblLatitude.TabIndex = 2;
             this.lblLatitude.Text = "Latitude:";
+            this.toolTip.SetToolTip(this.lblLatitude, "A decimal number for a customer latitude e.g. 22.23456");
             // 
             // txtName
             // 
@@ -179,6 +189,7 @@
             this.txtName.Name = "txtName";
             this.txtName.Size = new System.Drawing.Size(116, 21);
             this.txtName.TabIndex = 1;
+            this.toolTip.SetToolTip(this.txtName, "A customer name  e.g Jeandre");
             // 
             // lblName
             // 
@@ -188,6 +199,7 @@
             this.lblName.Size = new System.Drawing.Size(43, 15);
             this.lblName.TabIndex = 0;
             this.lblName.Text = "Name:";
+            this.toolTip.SetToolTip(this.lblName, "A customer name e.g Jeandre");
             // 
             // customerDataGridView
             // 
@@ -208,6 +220,7 @@
             this.customerDataGridView.ReadOnly = true;
             this.customerDataGridView.Size = new System.Drawing.Size(345, 341);
             this.customerDataGridView.TabIndex = 8;
+            this.toolTip.SetToolTip(this.customerDataGridView, "A grid containing customers.");
             this.customerDataGridView.CellClick += new System.Windows.Forms.DataGridViewCellEventHandler(this.customerDataGridView_CellClick);
             // 
             // ID
@@ -291,6 +304,7 @@
         private System.Windows.Forms.DataGridViewTextBoxColumn CustomerName;
         private System.Windows.Forms.DataGridViewTextBoxColumn Latitude;
         private System.Windows.Forms.DataGridViewTextBoxColumn Longitude;
+        private System.Windows.Forms.ToolTip toolTip;
     }
 }
 
