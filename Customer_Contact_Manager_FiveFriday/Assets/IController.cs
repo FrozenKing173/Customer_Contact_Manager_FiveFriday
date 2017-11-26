@@ -3,78 +3,66 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-//using System.Windows.Forms
+using Customer_Contact_Manager_FiveFriday.Assets.Models;
+using System.Windows.Forms;
 
 
 namespace Customer_Contact_Manager_FiveFriday.Assets
 {
+    /* The controller handles user input from the view and decides what to do with it depending on the request from the view.
+    */ 
     public interface IController
     {
-        //void incvalue();
-
-        void AddCustomer(string Name, decimal Latitude, decimal Longitude);
-        void UpdateCustomer(int ID, string Name, decimal Latitude, decimal Longitude);
-        void DeleteCustomer(int ID);
+        //All the Customer view functions.
+        void AddCustomer(string id, decimal latitude, decimal longitude);
+        void UpdateCustomer(int id, string name, decimal latitude, decimal longitude);
+        void DeleteCustomer(int id);
         void SelectAllCustomers();
-        void SelectCustomer(int ID);
+        void InitializeContactsView(int id, string name);
 
+        //All the customer's contacts view functions.
         void AddCustomerContacts(string name, string email, string contactNumber, int customerID);
         void UpdateCustomerContacts(int id, string name, string email, string contactNumber, int customerID);
         void DeleteCustomerContacts(int id, int customerID);
-        void SelectAllCustomerContacts(int customerID);
-
-        void InitializeContactsView(IView custContactsView);
-        //void StartApp();
+        void SelectAllCustomerContacts(int customerID);  
     }
     public class Controller : IController
     {
         IView view;
-        Assets.Models.IModel model;
+        IModel model;
 
-        public Controller(IView v, Assets.Models.IModel m)
+        public Controller(IView v, IModel m)
         {
             view = v;
             model = m;
-            //view.SetController(this);
-            //model.RegisterObserver((Assets.Models.IModelObserver)view);
-            //view.viewChanged += new ViewHandler<IView>(this.View_Changed);
+
+            ((CustomerView)view).SetController(this);
+            view.RegisterView();
+
+            Application.Run(((CustomerView)view));
         }
-
-        /*public void View_Changed(IView v, ViewEventArgs e)
-        {
-            //model.setvalue(e.value);
-        }*/
-
-        /*public void incvalue()
-        {
-           /model.increment();
-        }*/
-
-
-        /*public int AddCustomer() {
-            return 1;
-        }*/
-        /*public void StartApp()
-        {
-            Application.Run()
-        }*/
-        public void AddCustomer(string Name, decimal Latitude, decimal Longitude){            
-            model.AddCustomer(Name, Latitude, Longitude);
+        //Customer controller options
+        public void AddCustomer(string name, decimal latitude, decimal longitude){            
+            model.AddCustomer(name, latitude, longitude);
         }
-        public void UpdateCustomer(int ID, string Name, decimal Latitude, decimal Longitude) {
-            model.UpdateCustomer(ID, Name, Latitude, Longitude);           
+        public void UpdateCustomer(int id, string name, decimal latitude, decimal longitude) {
+            model.UpdateCustomer(id, name, latitude, longitude);           
         }
-        public void DeleteCustomer(int ID) {
-            model.DeleteCustomer(ID);
+        public void DeleteCustomer(int id) {
+            model.DeleteCustomer(id);
         }
         public void SelectAllCustomers(){
             model.SelectAllCustomers();           
         }
-        public void SelectCustomer(int ID)
-        {
-            model.SelectCustomer(ID);
+        
+        public void InitializeContactsView(int id, string name){
+            view = new ContactsViewer(model, id, name);
+
+            view.SetController(this);
+            ((ContactsViewer)view).Show();
         }
 
+        //Customer's contacts controller options
         public void AddCustomerContacts(string name, string email, string contactNumber, int customerID) {
             model.AddCustomerContacts(name, email, contactNumber, customerID);
         }
@@ -84,18 +72,10 @@ namespace Customer_Contact_Manager_FiveFriday.Assets
         public void DeleteCustomerContacts(int id, int customerID) {
             model.DeleteCustomerContacts(id, customerID);
         }
-        public void SelectAllCustomerContacts(int customerID)
-        {
+        public void SelectAllCustomerContacts(int customerID){
             model.SelectAllCustomerContacts(customerID);
         }
-
-        public void InitializeContactsView(IView custContactsView)
-        {
-
-            
-            custContactsView.SetController(this);
-            ((ContactsViewer)custContactsView).Show();
-
-        }
+   
+       
     }
 }

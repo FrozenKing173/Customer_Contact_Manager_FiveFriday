@@ -5,24 +5,16 @@ using System.Text;
 using System.Threading.Tasks;
 
 namespace Customer_Contact_Manager_FiveFriday.Assets
-{
-
-    /*public delegate void ViewHandler<IView>(IView sender, ViewEventArgs e);
-   
-    public class ViewEventArgs : EventArgs
-    {
-        public int value;
-        public ViewEventArgs(int v) { value = v; }
-    }*/
-  
+{    
     public interface IView
-    {
-        //event ViewHandler<IView> viewChanged;
+    {        
+        //View registers the controller.
         void SetController(IController controller);
+        //View registers as an observer on the model.
         void RegisterView();
         void UnRegisterView();
-
-        string GetBusinessViewState();
+        //a method for getting the View's ID state
+        string GetBusinessViewState();//
        
     }
 }

@@ -88,7 +88,7 @@
             this.btnCustomerContacts.Margin = new System.Windows.Forms.Padding(0);
             this.btnCustomerContacts.Name = "btnCustomerContacts";
             this.btnCustomerContacts.Size = new System.Drawing.Size(113, 27);
-            this.btnCustomerContacts.TabIndex = 9;
+            this.btnCustomerContacts.TabIndex = 7;
             this.btnCustomerContacts.Text = "Contacts";
             this.btnCustomerContacts.UseVisualStyleBackColor = true;
             this.btnCustomerContacts.Click += new System.EventHandler(this.btnCustomerContacts_Click);
@@ -101,7 +101,7 @@
             this.btnAdd.Margin = new System.Windows.Forms.Padding(0);
             this.btnAdd.Name = "btnAdd";
             this.btnAdd.Size = new System.Drawing.Size(87, 27);
-            this.btnAdd.TabIndex = 8;
+            this.btnAdd.TabIndex = 4;
             this.btnAdd.Text = "Add";
             this.btnAdd.UseVisualStyleBackColor = true;
             this.btnAdd.Click += new System.EventHandler(this.btnAdd_Click);
@@ -114,7 +114,7 @@
             this.btnDelete.Margin = new System.Windows.Forms.Padding(0);
             this.btnDelete.Name = "btnDelete";
             this.btnDelete.Size = new System.Drawing.Size(87, 27);
-            this.btnDelete.TabIndex = 7;
+            this.btnDelete.TabIndex = 6;
             this.btnDelete.Text = "Delete";
             this.btnDelete.UseVisualStyleBackColor = true;
             this.btnDelete.Click += new System.EventHandler(this.btnDelete_Click);
@@ -127,7 +127,7 @@
             this.btnUpdate.Margin = new System.Windows.Forms.Padding(0);
             this.btnUpdate.Name = "btnUpdate";
             this.btnUpdate.Size = new System.Drawing.Size(87, 27);
-            this.btnUpdate.TabIndex = 3;
+            this.btnUpdate.TabIndex = 5;
             this.btnUpdate.Text = "Update";
             this.btnUpdate.UseVisualStyleBackColor = true;
             this.btnUpdate.Click += new System.EventHandler(this.btnUpdate_Click);
@@ -146,7 +146,7 @@
             this.txtLongitude.Location = new System.Drawing.Point(117, 100);
             this.txtLongitude.Name = "txtLongitude";
             this.txtLongitude.Size = new System.Drawing.Size(116, 21);
-            this.txtLongitude.TabIndex = 5;
+            this.txtLongitude.TabIndex = 3;
             // 
             // lblLongitude
             // 
@@ -162,7 +162,7 @@
             this.txtLatitude.Location = new System.Drawing.Point(117, 69);
             this.txtLatitude.Name = "txtLatitude";
             this.txtLatitude.Size = new System.Drawing.Size(116, 21);
-            this.txtLatitude.TabIndex = 3;
+            this.txtLatitude.TabIndex = 2;
             // 
             // lblLatitude
             // 
@@ -207,7 +207,7 @@
             this.customerDataGridView.Name = "customerDataGridView";
             this.customerDataGridView.ReadOnly = true;
             this.customerDataGridView.Size = new System.Drawing.Size(345, 341);
-            this.customerDataGridView.TabIndex = 2;
+            this.customerDataGridView.TabIndex = 8;
             this.customerDataGridView.CellClick += new System.Windows.Forms.DataGridViewCellEventHandler(this.customerDataGridView_CellClick);
             // 
             // ID
@@ -261,6 +261,7 @@
             this.Name = "CustomerView";
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
             this.Text = "FiveFriday";
+            this.FormClosing += new System.Windows.Forms.FormClosingEventHandler(this.CustomerView_FormClosing);
             this.Load += new System.EventHandler(this.Main_Load);
             ((System.ComponentModel.ISupportInitialize)(this.logo)).EndInit();
             this.grpCustomer.ResumeLayout(false);

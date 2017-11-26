@@ -7,47 +7,27 @@ using System.Threading.Tasks;
 
 namespace Customer_Contact_Manager_FiveFriday.Assets.Models
 {
-    //public delegate void ModelHandler<IModel>(IModel sender, ModelEventArgs e);
-  
-    /*public class ModelEventArgs : EventArgs
-    {
-        public object objectValue;
-        public ModelEventArgs(object value)
-        {
-            objectValue = value;
-        }
-        
-
-    }*/
- 
+    /* I've made the business model so that it updates an individual view(IModelObserver) depending on the business objective regarding a specific view.
+    */ 
     public interface IModelObserver
     {
-        //void valueIncremented(IModel model, ModelEventArgs e);
-
-        //void UpdateObserver(IModel model, ModelEventArgs modelEvents);
         void UpdateBusinessView(Dictionary<string, IList> updates);
-        string GetBusinessViewState();
     }
   
     public interface IModel
-    {
-        //void Attach(IModelObserver imo);
-        //void increment();
-        //void setvalue(int v);
-
+    {       
+        //Register BusinessViews as IModelObserver
         void RegisterObserver(IModelObserver modelObserver, string ID);
         void RemoveObserver(IModelObserver modelObserver, string ID);
-        void NotifyObservers();
+        void NotifyObservers();     
 
-        //void setCustomer(int id, string name, decimal latitude, decimal longitude);
-       // void setCustomerContact(int id, string name, string email, string contactNumber, int customerID);
-
+        //Handle customer data.
         void AddCustomer(string Name, decimal Latitude, decimal Longitude);
         void UpdateCustomer(int ID, string Name, decimal Latitude, decimal Longitude);
         void DeleteCustomer(int ID);
-        void SelectAllCustomers();
-        void SelectCustomer(int ID);
+        void SelectAllCustomers();        
 
+        //Handle customer's contacts data.
         void AddCustomerContacts(string name, string email, string contactNumber, int customerID);
         void UpdateCustomerContacts(int ID, string name, string email, string constactNumber, int customerID);
         void DeleteCustomerContacts(int ID, int customerID);
@@ -57,49 +37,25 @@ namespace Customer_Contact_Manager_FiveFriday.Assets.Models
     }
     public class Model : IModel
     {
-        //public event ModelHandler<Model> changed = null;
+        
         List<BusinessObserver> businessViews = null;
         Dictionary<string, IList> businessData = null;
-        
-        //List<string> businessViewIDs = null;
+                
         private string businessViewState;
 
-        AccessData acData = null;
-        //IView currentView = null;
+        AccessData acData = null;        
         
         public Model() {
             businessViews = new List<BusinessObserver>();
-            businessData = new Dictionary<string, IList>();
-            //businessViewIDs = new List<string>();
-        }
-     
-        /*public IncModel()
-        {
-            value = 0;
-        }*/
-     
-        /*public void setvalue(int v)
-        {
-            value = v;
-        }*/
-    
-        /*public void increment()
-        {
-            value++;
-            changed.Invoke(this, new ModelEventArgs(value));
-        }*/
-     
-        /*public void attach(IModelObserver imo)
-        {
-            changed += new ModelHandler<IModel>(imo.valueIncremented);
-        }*/
+            businessData = new Dictionary<string, IList>();            
+        }            
             
         public string BusinessViewState
         {
             get { return businessViewState; }
             set { businessViewState = value;}
         }
-       
+        //Register BusinessViews as IModelObserver
         public void RegisterObserver(IModelObserver observer, string ID)
         {
             BusinessObserver registerBusinessView = new BusinessObserver(ID, observer);
@@ -132,17 +88,14 @@ namespace Customer_Contact_Manager_FiveFriday.Assets.Models
                 }
                
             }
-            //businessViewIDs.Add(ID);
-
-            //currentView = (IView)MainView;
-            //changed += new ModelHandler<Model>(observer.UpdateObserver);
+          
         }
         public void RemoveObserver(IModelObserver observer, string ID)
         {
             BusinessObserver removeBusinessView = new BusinessObserver(ID, observer);
             businessViews.Remove(removeBusinessView);
             businessData.Remove(ID);
-            //businessViewIDs.Remove(ID);
+           
         }
         public void NotifyObservers()
         {
@@ -156,72 +109,65 @@ namespace Customer_Contact_Manager_FiveFriday.Assets.Models
                 }
                
             }
-            //changed.Invoke(this, modelEvent);
+           
         }
 
-        //public void setCustomer(int id, string name, decimal latitude, decimal longitude) { }
-        //public void setCustomerContact(int id, string name, string email, string contactNumber, int customerID) { }
-
-
+        //Handle customer data.
         public void AddCustomer(string Name, decimal Latitude, decimal Longitude) {
-            acData = AccessData.Instance;
-            
             Customer cust = new Customer();
             cust.Name = Name; cust.Latitude = Latitude; cust.Longitude = Longitude;
+
+            acData = AccessData.Instance;      
             acData.AddCustomer(cust);
 
             SelectAllCustomers();
         }
         public void UpdateCustomer(int ID, string Name, decimal Latitude, decimal Longitude) {
-            acData = AccessData.Instance;
-            
             Customer cust = new Customer();
             cust.ID = ID; cust.Name = Name; cust.Latitude = Latitude; cust.Longitude = Longitude;
+
+            acData = AccessData.Instance;            
             acData.UpdateCustomer(cust);
 
             SelectAllCustomers();
         }
         public void DeleteCustomer(int ID) {
-            acData = AccessData.Instance;
-            
+            acData = AccessData.Instance;            
             acData.DeleteCustomer(ID);
 
             SelectAllCustomers();
         }
         public void SelectAllCustomers() {
             BusinessViewState = "None_Customer";
+
             acData = AccessData.Instance;
             List<Customer> listOfCustomers = acData.SelectAllCustomers();
 
             businessData[businessViewState] = listOfCustomers;
-            //changed.Invoke(this, new ModelEventArgs(listOfCustomers));
+            
             NotifyObservers();
         }
-        public void SelectCustomer(int ID)
-        {
-            acData = AccessData.Instance;
-            acData.SelectCustomer(ID);
-        }
 
+        //Handle customer's contacts data.
         public void AddCustomerContacts(string name, string email, string contactNumber, int customerID) {
-            acData = AccessData.Instance;
-            
             CustomerContacts custContacts = new CustomerContacts();
             custContacts.Name = name; custContacts.Email = email; custContacts.ContactNumber = contactNumber; custContacts.CustomerID = customerID;
+
+            acData = AccessData.Instance;
             acData.AddCustomerContacts(custContacts);
+
             SelectAllCustomerContacts(customerID);
         }
         public void UpdateCustomerContacts(int id, string name, string email, string contactNumber, int customerID) {
-            acData = AccessData.Instance;
-
             CustomerContacts custContacts = new CustomerContacts();
             custContacts.ID = id; custContacts.Name = name; custContacts.Email = email; custContacts.ContactNumber = contactNumber; custContacts.CustomerID = customerID;
+
+            acData = AccessData.Instance;
             acData.UpdateCustomerContacts(custContacts);
 
             SelectAllCustomerContacts(custContacts.CustomerID);
         }
-        public void DeleteCustomerContacts(int id, int customerID) {
-            
+        public void DeleteCustomerContacts(int id, int customerID) {            
             CustomerContacts custContacts = new CustomerContacts();
             custContacts.ID = id; custContacts.CustomerID = customerID;
 
@@ -230,16 +176,17 @@ namespace Customer_Contact_Manager_FiveFriday.Assets.Models
 
             SelectAllCustomerContacts(custContacts.CustomerID);
         }
-        public void SelectAllCustomerContacts(int customerID) {
+        public void SelectAllCustomerContacts(int customerID) {                                  
             acData = AccessData.Instance;
+            List<CustomerContacts> listOfCustomerContacts = acData.SelectAllCustomerContacts(customerID);
+
             string state = customerID.ToString() + "_CustomerContacts";
             BusinessViewState = state;
-            List<CustomerContacts> listOfCustomerContacts = acData.SelectAllCustomerContacts(customerID);
             businessData[BusinessViewState] = listOfCustomerContacts;
-            //NotifyObservers(new ModelEventArgs(listOfCustomerContacts));
+            
             NotifyObservers();
         }
 
        
     }
-}
+}]
