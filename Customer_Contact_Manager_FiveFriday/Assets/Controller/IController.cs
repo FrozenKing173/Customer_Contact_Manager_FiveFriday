@@ -56,10 +56,10 @@ namespace Customer_Contact_Manager_FiveFriday.Assets
         }
         
         public void InitializeContactsView(int id, string name){
-            view = new ContactsViewer(model, id, name);
+            view = new ContactsView(model, id, name);
 
             view.SetController(this);
-            ((ContactsViewer)view).Show();
+            ((ContactsView)view).Show();
         }
 
         //Customer's contacts controller options

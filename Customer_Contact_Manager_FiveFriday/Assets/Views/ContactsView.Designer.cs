@@ -1,6 +1,6 @@
 ﻿namespace Customer_Contact_Manager_FiveFriday
 {
-    partial class ContactsViewer
+    partial class ContactsView
     {
         /// <summary>
         /// Required designer variable.
@@ -29,7 +29,7 @@
         private void InitializeComponent()
         {
             this.components = new System.ComponentModel.Container();
-            System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(ContactsViewer));
+            System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(ContactsView));
             this.customerContactsListView = new System.Windows.Forms.ListView();
             this.CustomerContactsID = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
             this.CustomerContactsName = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
@@ -241,6 +241,7 @@
             this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.Fixed3D;
             this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
             this.MaximumSize = new System.Drawing.Size(487, 785);
+            this.Name = "ContactsViewer";
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
             this.Text = "FiveFriday";
             this.FormClosing += new System.Windows.Forms.FormClosingEventHandler(this.CustomerContactsView_FormClosing);
@@ -264,11 +265,9 @@
         private System.Windows.Forms.Label lblEmail;
         private System.Windows.Forms.TextBox txtName;
         private System.Windows.Forms.Label lblName;
-        private System.Windows.Forms.ColumnHeader CustomerContactsID;
-        private System.Windows.Forms.ColumnHeader Name;
+        private System.Windows.Forms.ColumnHeader CustomerContactsID;    
         private System.Windows.Forms.ColumnHeader CustomerContactsEmail;
         private System.Windows.Forms.ColumnHeader CustomerContactsNumber;
-        private System.Windows.Forms.ColumnHeader ContactName;
         private System.Windows.Forms.ColumnHeader CustomerContactsName;
         private System.Windows.Forms.Label lblCustomerName;
         private System.Windows.Forms.Label lblID;

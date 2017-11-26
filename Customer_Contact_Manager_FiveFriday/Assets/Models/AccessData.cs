@@ -67,7 +67,7 @@ namespace Customer_Contact_Manager_FiveFriday.Assets.Models
             }catch(Exception e)
             {
                 listOfCustomers = null;
-                MessageBox.Show("SelectAllCustomers: Exception occured in the accessing the data.","Critical-error" , MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                MessageBox.Show("SelectAllCustomers: Exception occured in the accessing the data.\n\n"+e.Message,"Critical-error" , MessageBoxButtons.OK, MessageBoxIcon.Warning);
             }
             finally
             {
@@ -83,59 +83,7 @@ namespace Customer_Contact_Manager_FiveFriday.Assets.Models
             }
             return listOfCustomers;
         }
-        //SelectCustomer is not being used.
-        public Customer SelectCustomer(int ID)
-        {
-            SqlConnection databaseConnection = null;
-            SqlDataReader databaseReader = null;
-            Customer cust = null;
-            
-
-            try
-            {
-                databaseConnection = new SqlConnection("Server=(local);Database=Customer Contact Manager FiveFriday; Integrated Security=SSPI");
-                databaseConnection.Open();
-
-                SqlCommand commandBuilder = new SqlCommand("dbo.sp_SelectAllCustomers", databaseConnection);
-                commandBuilder.CommandType = System.Data.CommandType.StoredProcedure;
-                commandBuilder.Parameters.Add(new SqlParameter("@ID", ID));
-
-                databaseReader = commandBuilder.ExecuteReader();
-
-                
-                while (databaseReader.Read())
-                {
-                    cust = new Customer();
-                    cust.ID = int.Parse(databaseReader["ID"].ToString());
-                    cust.Name = databaseReader["Name"].ToString();
-                    cust.Latitude = Convert.ToDecimal(databaseReader["Latitude"].ToString());
-                    cust.Longitude = Convert.ToDecimal(databaseReader["Longitude"].ToString());
-                    
-
-                }
-
-                return cust;
-            }
-            catch (Exception e)
-            {
-                cust = null;
-                MessageBox.Show(e.ToString(), "Exception occured in the accessing the data.", MessageBoxButtons.OK, MessageBoxIcon.Warning);
-
-            }
-            finally
-            {
-                if (databaseConnection != null)
-                {
-                    databaseConnection.Close();
-                }
-                if (databaseReader != null)
-                {
-                    databaseReader.Close();
-                }
-                GC.Collect();
-            }
-            return cust;
-        }
+             
         public void AddCustomer(Customer cust)
         {
             SqlConnection databaseConnection = null;           
@@ -157,7 +105,7 @@ namespace Customer_Contact_Manager_FiveFriday.Assets.Models
             }
             catch (Exception e)
             {
-                MessageBox.Show("AddCustomers: Exception occured in the accessing the data.", "Critical-error", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                MessageBox.Show("AddCustomers: Exception occured in the accessing the data.\n\n"+e.Message, "Critical-error", MessageBoxButtons.OK, MessageBoxIcon.Warning);
             }
             finally
             {
@@ -190,7 +138,7 @@ namespace Customer_Contact_Manager_FiveFriday.Assets.Models
             }
             catch (Exception e)
             {
-                MessageBox.Show("UpdateCustomers: Exception occured in the accessing the data.", "Critical-error", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                MessageBox.Show("UpdateCustomers: Exception occured in the accessing the data.\n\n"+e.Message, "Critical-error", MessageBoxButtons.OK, MessageBoxIcon.Warning);
             }
             finally
             {
@@ -221,7 +169,7 @@ namespace Customer_Contact_Manager_FiveFriday.Assets.Models
             }
             catch (Exception e)
             {
-                MessageBox.Show("DeleteCustomers: Exception occured in the accessing the data.", "Critical-error", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                MessageBox.Show("DeleteCustomers: Exception occured in the accessing the data.\n\n" + e.Message, "Critical-error", MessageBoxButtons.OK, MessageBoxIcon.Warning);
             }
             finally
             {
@@ -234,8 +182,6 @@ namespace Customer_Contact_Manager_FiveFriday.Assets.Models
             }
 
         }
-
-
 
         public List<CustomerContacts> SelectAllCustomerContacts(int customerID)
         {
@@ -274,7 +220,7 @@ namespace Customer_Contact_Manager_FiveFriday.Assets.Models
             catch (Exception e)
             {
                 listOfCustContacts = null;
-                MessageBox.Show("SelectAllCustomerContacts: Exception occured in the accessing the data.", "Critical-error", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                MessageBox.Show("SelectAllCustomerContacts: Exception occured in the accessing the data.\n\n"+e.Message, "Critical-error", MessageBoxButtons.OK, MessageBoxIcon.Warning);
             }
             finally
             {
@@ -310,7 +256,7 @@ namespace Customer_Contact_Manager_FiveFriday.Assets.Models
             }
             catch (Exception e)
             {
-                MessageBox.Show("AddCustomerContacts: Exception occured in the accessing the data.", "Critical-error", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                MessageBox.Show("AddCustomerContacts: Exception occured in the accessing the data.\n\n"+e.Message, "Critical-error", MessageBoxButtons.OK, MessageBoxIcon.Warning);
             }
             finally
             {
@@ -347,7 +293,7 @@ namespace Customer_Contact_Manager_FiveFriday.Assets.Models
             }
             catch (Exception e)
             {
-                MessageBox.Show("UpdateCustomerContacts: Exception occured in the accessing the data.", "Critical-error", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                MessageBox.Show("UpdateCustomerContacts: Exception occured in the accessing the data.\n\n"+e.Message, "Critical-error", MessageBoxButtons.OK, MessageBoxIcon.Warning);
             }
             finally
             {
@@ -378,7 +324,7 @@ namespace Customer_Contact_Manager_FiveFriday.Assets.Models
             }
             catch (Exception e)
             {
-                MessageBox.Show("DeleteCustomerContacts: Exception occured in the accessing the data.", "Critical-error", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                MessageBox.Show("DeleteCustomerContacts: Exception occured in the accessing the data.\n\n"+e.Message, "Critical-error", MessageBoxButtons.OK, MessageBoxIcon.Warning);
             }
             finally
             {

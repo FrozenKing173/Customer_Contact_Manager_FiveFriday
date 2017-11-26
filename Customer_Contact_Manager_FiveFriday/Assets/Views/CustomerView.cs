@@ -137,7 +137,7 @@ namespace Customer_Contact_Manager_FiveFriday
                 else
                 {
                     errorCode = 1;
-                    MessageBox.Show("Kindly fill in valid fields.", "Whoops!", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                    MessageBox.Show("Please select a customer before updating.", "Whoops!", MessageBoxButtons.OK, MessageBoxIcon.Information);
                 }
 
 

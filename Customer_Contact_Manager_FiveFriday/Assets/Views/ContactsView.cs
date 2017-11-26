@@ -16,13 +16,13 @@ using System.Net.Mail;
 
 namespace Customer_Contact_Manager_FiveFriday
 {
-    public partial class ContactsViewer : Form, IView, IModelObserver
+    public partial class ContactsView : Form, IView, IModelObserver
     {
         IController controller;
         IModel businessModel;
         private int customerID;
         private string customerName;
-        public ContactsViewer(IModel model, int ID, string name)
+        public ContactsView(IModel model, int ID, string name)
         {
             CustomerID = ID;
             CustomerName = name;
@@ -130,7 +130,7 @@ namespace Customer_Contact_Manager_FiveFriday
                     
                     
                     custContacts.ContactNumber = txtContactNumber.Text;
-
+                    custContacts.CustomerID = CustomerID;
                     if (lblID.Text.Length > 4)
                     {
                         custContacts.ID = int.Parse(lblID.Text.TrimStart(removeID));
@@ -265,7 +265,7 @@ namespace Customer_Contact_Manager_FiveFriday
                 if (customerContactsListView.SelectedItems.Count > 0)
                 {
                     ListViewItem item = customerContactsListView.SelectedItems[0];
-                    lblID.Text = "ID " + item.SubItems[0].Text;
+                    lblID.Text = "ID: " + item.SubItems[0].Text;
                     txtName.Text = item.SubItems[1].Text;
                     txtEmail.Text = item.SubItems[2].Text;
                     txtContactNumber.Text = item.SubItems[3].Text;

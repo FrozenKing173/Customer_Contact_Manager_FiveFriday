@@ -46,31 +46,31 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Assets\IController.cs" />
-    <Compile Include="Assets\IView.cs" />
+    <Compile Include="Assets\Controller\IController.cs" />
+    <Compile Include="Assets\Views\IView.cs" />
     <Compile Include="Assets\Models\AccessData.cs" />
     <Compile Include="Assets\Models\BusinessObserver.cs" />
     <Compile Include="Assets\Models\Customer.cs" />
     <Compile Include="Assets\Models\CustomerContacts.cs" />
     <Compile Include="Assets\Models\IModel.cs" />
-    <Compile Include="ContactsViewer.cs">
+    <Compile Include="Assets\Views\ContactsView.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="ContactsViewer.Designer.cs">
-      <DependentUpon>ContactsViewer.cs</DependentUpon>
+    <Compile Include="Assets\Views\ContactsView.Designer.cs">
+      <DependentUpon>ContactsView.cs</DependentUpon>
     </Compile>
-    <Compile Include="CustomerView.cs">
+    <Compile Include="Assets\Views\CustomerView.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="CustomerView.Designer.cs">
+    <Compile Include="Assets\Views\CustomerView.Designer.cs">
       <DependentUpon>CustomerView.cs</DependentUpon>
     </Compile>
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <EmbeddedResource Include="ContactsViewer.resx">
-      <DependentUpon>ContactsViewer.cs</DependentUpon>
+    <EmbeddedResource Include="Assets\Views\ContactsView.resx">
+      <DependentUpon>ContactsView.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="CustomerView.resx">
+    <EmbeddedResource Include="Assets\Views\CustomerView.resx">
       <DependentUpon>CustomerView.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Properties\Resources.resx">
