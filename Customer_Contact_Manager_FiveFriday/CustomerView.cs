@@ -83,12 +83,32 @@ namespace Customer_Contact_Manager_FiveFriday
 
 
 
+        public void UseColour()
+        {
+            string blue = "#419fd6";
+            string yellow = "#fcab10";
+            string red = "#ef2d56";
+            string grey = "#999999";
+            string purple = "#443c6e";
 
+            Color myColor = System.Drawing.ColorTranslator.FromHtml(blue);
+            this.btnAdd.BackColor = myColor;
+            myColor = System.Drawing.ColorTranslator.FromHtml(yellow);
+            this.btnUpdate.BackColor = myColor;
+            myColor = System.Drawing.ColorTranslator.FromHtml(red);
+            this.btnDelete.BackColor = myColor;
+            myColor = System.Drawing.ColorTranslator.FromHtml(purple);
+            this.btnCustomerContacts.BackColor = myColor;
+
+            myColor = System.Drawing.ColorTranslator.FromHtml(grey);
+            this.customerDataGridView.BackgroundColor = myColor;
+
+        }
 
         private void Main_Load(object sender, EventArgs e)
         {
             lblID.Visible = false;
-            logo.Image = Customer_Contact_Manager_FiveFriday.Properties.Resources.logomark_90px;
+            UseColour();           
             controller.SelectAllCustomers();
         }
 
@@ -193,12 +213,13 @@ namespace Customer_Contact_Manager_FiveFriday
 
         private void btnCustomerContacts_Click(object sender, EventArgs e)
         {
-            ContactsView custContactsView = null;
+            ContactsViewer custContactsView = null;
             try
             {
                 char[] removeID = new char[] { 'I', 'D', 'i', 'd', ':', ' ' };
                 int ID = int.Parse(lblID.Text.TrimStart(removeID));
-                custContactsView = new ContactsView(businessModel, ID);
+                if (string.IsNullOrEmpty(txtName.Text)) throw new Exception();
+                custContactsView = new ContactsViewer(businessModel, ID, txtName.Text);
                 businessModel.RegisterObserver(custContactsView, GetBusinessContactsViewState());
                 controller.InitializeContactsView(custContactsView);
                               

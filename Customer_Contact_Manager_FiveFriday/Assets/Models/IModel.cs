@@ -46,13 +46,14 @@ namespace Customer_Contact_Manager_FiveFriday.Assets.Models
         void UpdateCustomer(int ID, string Name, decimal Latitude, decimal Longitude);
         void DeleteCustomer(int ID);
         void SelectAllCustomers();
+        void SelectCustomer(int ID);
 
         void AddCustomerContacts(string name, string email, string contactNumber, int customerID);
-        void UpdateCustomerContacts();
-        void DeleteCustomerContacts();
+        void UpdateCustomerContacts(int ID, string name, string email, string constactNumber, int customerID);
+        void DeleteCustomerContacts(int ID, int customerID);
         void SelectAllCustomerContacts(int customerID);
 
-        //void SetBusinessViewState(string businessViewState);
+        
     }
     public class Model : IModel
     {
@@ -145,8 +146,7 @@ namespace Customer_Contact_Manager_FiveFriday.Assets.Models
         }
         public void NotifyObservers()
         {
-            string viewState = "";
-            string businessViewState = "";
+           
             foreach(BusinessObserver businessView in businessViews)
             {
                 
@@ -197,6 +197,11 @@ namespace Customer_Contact_Manager_FiveFriday.Assets.Models
             //changed.Invoke(this, new ModelEventArgs(listOfCustomers));
             NotifyObservers();
         }
+        public void SelectCustomer(int ID)
+        {
+            acData = AccessData.Instance;
+            acData.SelectCustomer(ID);
+        }
 
         public void AddCustomerContacts(string name, string email, string contactNumber, int customerID) {
             acData = AccessData.Instance;
@@ -206,13 +211,24 @@ namespace Customer_Contact_Manager_FiveFriday.Assets.Models
             acData.AddCustomerContacts(custContacts);
             SelectAllCustomerContacts(customerID);
         }
-        public void UpdateCustomerContacts() {
+        public void UpdateCustomerContacts(int id, string name, string email, string contactNumber, int customerID) {
             acData = AccessData.Instance;
-            
+
+            CustomerContacts custContacts = new CustomerContacts();
+            custContacts.ID = id; custContacts.Name = name; custContacts.Email = email; custContacts.ContactNumber = contactNumber; custContacts.CustomerID = customerID;
+            acData.UpdateCustomerContacts(custContacts);
+
+            SelectAllCustomerContacts(custContacts.CustomerID);
         }
-        public void DeleteCustomerContacts() {
-            acData = AccessData.Instance;
+        public void DeleteCustomerContacts(int id, int customerID) {
             
+            CustomerContacts custContacts = new CustomerContacts();
+            custContacts.ID = id; custContacts.CustomerID = customerID;
+
+            acData = AccessData.Instance;
+            acData.DeleteCustomerContacts(custContacts);
+
+            SelectAllCustomerContacts(custContacts.CustomerID);
         }
         public void SelectAllCustomerContacts(int customerID) {
             acData = AccessData.Instance;

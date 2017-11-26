@@ -16,10 +16,11 @@ namespace Customer_Contact_Manager_FiveFriday.Assets
         void UpdateCustomer(int ID, string Name, decimal Latitude, decimal Longitude);
         void DeleteCustomer(int ID);
         void SelectAllCustomers();
+        void SelectCustomer(int ID);
 
         void AddCustomerContacts(string name, string email, string contactNumber, int customerID);
-        void UpdateCustomerContacts();
-        void DeleteCustomerContacts();
+        void UpdateCustomerContacts(int id, string name, string email, string contactNumber, int customerID);
+        void DeleteCustomerContacts(int id, int customerID);
         void SelectAllCustomerContacts(int customerID);
 
         void InitializeContactsView(IView custContactsView);
@@ -69,15 +70,19 @@ namespace Customer_Contact_Manager_FiveFriday.Assets
         public void SelectAllCustomers(){
             model.SelectAllCustomers();           
         }
+        public void SelectCustomer(int ID)
+        {
+            model.SelectCustomer(ID);
+        }
 
         public void AddCustomerContacts(string name, string email, string contactNumber, int customerID) {
             model.AddCustomerContacts(name, email, contactNumber, customerID);
         }
-        public void UpdateCustomerContacts() {
-            model.UpdateCustomerContacts();
+        public void UpdateCustomerContacts(int id, string name, string email, string contactNumber, int customerID) {
+            model.UpdateCustomerContacts(id, name, email, contactNumber, customerID);
         }
-        public void DeleteCustomerContacts() {
-            model.DeleteCustomerContacts();
+        public void DeleteCustomerContacts(int id, int customerID) {
+            model.DeleteCustomerContacts(id, customerID);
         }
         public void SelectAllCustomerContacts(int customerID)
         {
@@ -89,7 +94,7 @@ namespace Customer_Contact_Manager_FiveFriday.Assets
 
             
             custContactsView.SetController(this);
-            ((ContactsView)custContactsView).Show();
+            ((ContactsViewer)custContactsView).Show();
 
         }
     }

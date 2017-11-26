@@ -82,6 +82,58 @@ namespace Customer_Contact_Manager_FiveFriday.Assets.Models
             }
             return listOfCustomers;
         }
+        public Customer SelectCustomer(int ID)
+        {
+            SqlConnection databaseConnection = null;
+            SqlDataReader databaseReader = null;
+            Customer cust = null;
+            
+
+            try
+            {
+                databaseConnection = new SqlConnection("Server=(local);Database=Customer Contact Manager FiveFriday; Integrated Security=SSPI");
+                databaseConnection.Open();
+
+                SqlCommand commandBuilder = new SqlCommand("dbo.sp_SelectAllCustomers", databaseConnection);
+                commandBuilder.CommandType = System.Data.CommandType.StoredProcedure;
+                commandBuilder.Parameters.Add(new SqlParameter("@ID", ID));
+
+                databaseReader = commandBuilder.ExecuteReader();
+
+                
+                while (databaseReader.Read())
+                {
+                    cust = new Customer();
+                    cust.ID = int.Parse(databaseReader["ID"].ToString());
+                    cust.Name = databaseReader["Name"].ToString();
+                    cust.Latitude = Convert.ToDecimal(databaseReader["Latitude"].ToString());
+                    cust.Longitude = Convert.ToDecimal(databaseReader["Longitude"].ToString());
+                    
+
+                }
+
+                return cust;
+            }
+            catch (Exception e)
+            {
+                cust = null;
+                MessageBox.Show(e.ToString(), "Exception occured in the accessing the data.", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+
+            }
+            finally
+            {
+                if (databaseConnection != null)
+                {
+                    databaseConnection.Close();
+                }
+                if (databaseReader != null)
+                {
+                    databaseReader.Close();
+                }
+                GC.Collect();
+            }
+            return cust;
+        }
         public void AddCustomer(Customer cust)
         {
             SqlConnection databaseConnection = null;           
@@ -292,7 +344,7 @@ namespace Customer_Contact_Manager_FiveFriday.Assets.Models
             }
 
         }
-        public void UpdateCustomerContacts(CustomerContacts custContacts, Customer cust)
+        public void UpdateCustomerContacts(CustomerContacts custContacts)
         {
             SqlConnection databaseConnection = null;
 
@@ -341,7 +393,7 @@ namespace Customer_Contact_Manager_FiveFriday.Assets.Models
                 databaseConnection = new SqlConnection("Server=(local);Database=Customer Contact Manager FiveFriday; Integrated Security=SSPI");
                 databaseConnection.Open();
 
-                SqlCommand commandBuilder = new SqlCommand("dbo.sp_DeleteCustomersContacts", databaseConnection);
+                SqlCommand commandBuilder = new SqlCommand("dbo.sp_DeleteCustomerContacts", databaseConnection);
                 commandBuilder.CommandType = System.Data.CommandType.StoredProcedure;
 
                 commandBuilder.Parameters.Add(new SqlParameter("@ID", custContacts.ID));

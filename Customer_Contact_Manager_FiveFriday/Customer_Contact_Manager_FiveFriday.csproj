@@ -53,11 +53,11 @@
     <Compile Include="Assets\Models\Customer.cs" />
     <Compile Include="Assets\Models\CustomerContacts.cs" />
     <Compile Include="Assets\Models\IModel.cs" />
-    <Compile Include="ContactsView.cs">
+    <Compile Include="ContactsViewer.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="ContactsView.Designer.cs">
-      <DependentUpon>ContactsView.cs</DependentUpon>
+    <Compile Include="ContactsViewer.Designer.cs">
+      <DependentUpon>ContactsViewer.cs</DependentUpon>
     </Compile>
     <Compile Include="CustomerView.cs">
       <SubType>Form</SubType>
@@ -67,8 +67,8 @@
     </Compile>
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <EmbeddedResource Include="ContactsView.resx">
-      <DependentUpon>ContactsView.cs</DependentUpon>
+    <EmbeddedResource Include="ContactsViewer.resx">
+      <DependentUpon>ContactsViewer.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="CustomerView.resx">
       <DependentUpon>CustomerView.cs</DependentUpon>
